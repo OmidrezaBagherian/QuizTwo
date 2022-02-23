@@ -24,16 +24,17 @@
 
             <ImageView
                 android:id="@+id/image_card"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_launcher_background"
+                app:layout_constraintBottom_toTopOf="@+id/title_card"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="12dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_margin="16dp"
                 android:id="@+id/title_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -42,9 +43,9 @@
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_card" />
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

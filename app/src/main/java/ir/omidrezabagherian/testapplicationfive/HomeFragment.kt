@@ -4,38 +4,45 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import com.google.gson.GsonBuilder
+import androidx.recyclerview.widget.LinearLayoutManager
+import ir.omidrezabagherian.testapplicationfive.Adapter.ImageAdapter
+import ir.omidrezabagherian.testapplicationfive.ModelHome.ImageHome
 import ir.omidrezabagherian.testapplicationfive.databinding.FragmentHomeBinding
-import ir.omidrezabagherian.testapplicationfour.NetworkManager
+import ir.omidrezabagherian.testapplicationfive.Data.NetworkManager
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
-class HomeFragment:Fragment(R.layout.fragment_home) {
+class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var bindingHome: FragmentHomeBinding
-    private lateinit var videoAdapter: ImageAdapter
+    private lateinit var imageAdapter: ImageAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         bindingHome = FragmentHomeBinding.bind(view)
 
-        bindingHome.recyclerviewHome.layoutManager = GridLayoutManager(context,2)
+        bindingHome.recyclerviewHome.layoutManager = LinearLayoutManager(context)
 
-        NetworkManager.service.uploadImage(100).enqueue(object :
-            retrofit2.Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                val body = response.body().toString()
-                val gson = GsonBuilder().create()
-                val result = gson.fromJson(body, ImageModel::class.java)
-                Log.i("App", body)
-                val adapter = ImageAdapter(this@HomeFragment,result)
+        imageAdapter = ImageAdapter(this)
 
-                bindingHome.recyclerviewHome.adapter = adapter
+        bindingHome.recyclerviewHome.adapter = imageAdapter
+
+        NetworkManager.service.uploadImage(
+            "1c04e05bce6e626247758d120b372a73",
+            "flickr.photos.getPopular",
+            "34427466731@N01",
+            "url_s",
+            "json",
+            1,
+            100,
+            1
+        ).enqueue(object : Callback<ImageHome> {
+            override fun onResponse(call: Call<ImageHome>, response: Response<ImageHome>) {
+                imageAdapter.setDataList(response.body()!!.photos.photo)
             }
 
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.i("TAG_APP",t.toString())
+            override fun onFailure(call: Call<ImageHome>, t: Throwable) {
+                Log.i("Throwable", t.toString())
             }
 
         })

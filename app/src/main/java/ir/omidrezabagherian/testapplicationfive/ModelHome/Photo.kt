@@ -1,6 +1,6 @@
-package ir.omidrezabagherian.testapplicationfive
+package ir.omidrezabagherian.testapplicationfive.ModelHome
 
-data class ImageModel(
+data class Photo(
     val farm: Int,
     val height_s: Int,
     val id: String,

@@ -1,8 +1,6 @@
-package ir.omidrezabagherian.testapplicationfour
+package ir.omidrezabagherian.testapplicationfive.Data
 
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -14,7 +12,7 @@ object NetworkManager {
         .build()
 
     val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("https://www.flickr.com/services/rest/")
+        .baseUrl("https://www.flickr.com/")
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()

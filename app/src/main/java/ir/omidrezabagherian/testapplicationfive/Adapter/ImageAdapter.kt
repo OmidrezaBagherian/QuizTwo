@@ -1,5 +1,6 @@
-package ir.omidrezabagherian.testapplicationfive
+package ir.omidrezabagherian.testapplicationfive.Adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,12 +9,15 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import ir.omidrezabagherian.testapplicationfive.ModelHome.Photo
+import ir.omidrezabagherian.testapplicationfive.R
 
-class ImageAdapter(private val fragment: Fragment, result: ImageModel) : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
-    private var dataList = emptyList<ImageModel>()
+class ImageAdapter(private val fragment: Fragment) : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
+    private var dataList = mutableListOf<Photo>()
 
-    internal fun setDataList(dataList: List<ImageModel>) {
-        this.dataList = dataList
+    fun setDataList(dataList: List<Photo>) {
+        this.dataList.addAll(dataList)
+        notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -30,8 +34,10 @@ class ImageAdapter(private val fragment: Fragment, result: ImageModel) : Recycle
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = dataList[position]
 
+        Log.i("App_Data",data.toString())
+
         Glide.with(fragment)
-            .load(data.url_s[position])
+            .load(data.url_s)
             .placeholder(R.drawable.ic_baseline_home_24)
             .into(holder.image)
 
